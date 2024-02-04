@@ -3,5 +3,8 @@ import numpy as np
 from EDA import EDA_obj
 
 data = pd.read_csv('train.csv')
-data_EDA = EDA_obj(data,'Exited')
-data_EDA.create_corr_heat_map()
+data = data.drop('id', axis=1)
+data_EDA = EDA_obj(data,'NObeyesdad')
+# data_EDA.map_categorical_var('Gender', {'Male':0, 'Female':1})
+# print(data_EDA.chi_squared_test('Gender','family_history_with_overweight'))
+print(data_EDA.chi_squared_mat(True))
