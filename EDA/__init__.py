@@ -58,6 +58,53 @@ class EDA_obj:
             sns.heatmap(mat1, annot=True, cmap="OrRd", fmt='.3f', cbar=True, vmin=-1, vmax=1)
             plt.show()
         return mat1
+    
+    def univariate(self):
+        varlist_num = self.find_numercial_vars()
+        varlist_cat = self.find_categorical_vars()
+
+        f, ax = plt.subplots(1, 1, figsize=(10, 5))
+        for var in varlist_cat:
+            sns.countplot(x=var, data=self.data, hue=var, palette=None, order=None)
+            plt.grid(color="black", linestyle="-.", linewidth=0.5, axis="y", which="major")
+            ax.set_title(f"Frequencies of {var}")
+            plt.show()
+
+        # for var in varlist_num:
+        l=len(varlist_num)
+        fig = plt.figure(figsize =(10, 5)) 
+        n = 0
+        for var in varlist_num:
+            print(n,var)
+            ax = fig.add_axes([n/l+0.02,0.03,1/l,0.9])
+            # Creating plot
+            plt.boxplot(self.data[var])
+            ax.set_title(f"Box Plot of {var}")
+            n=n+1
+        plt.show()
+        return 0
+    
+    def variablility(self,var): # Variablity in categorical data
+        data = pd.DataFrame(self.data[var], columns = [var])
+        data['ones'] = 1
+        data1 = data.groupby(['SMOKE']).count()
+        data1=data1/data1['ones'].sum()
+        x=(data1*data1).sum()
+        return 1-x['ones']
+
+    def bivariate():
+        return 0
+    
+    def detect_outlier():
+        return 0
+    
+    def dimensionality_reduction():
+        return 0
+    
+    def standardize_data():
+        return 0
+    
+
 
 
 
