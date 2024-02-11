@@ -85,12 +85,15 @@ class EDA_obj:
         return 0
     
     def variablility(self,var): # Variablity in categorical data
-        data = pd.DataFrame(self.data[var], columns = [var])
-        data['ones'] = 1
-        data1 = data.groupby(['SMOKE']).count()
-        data1=data1/data1['ones'].sum()
-        x=(data1*data1).sum()
-        return 1-x['ones']
+        if self.data[var].dtypes == object:
+            data = pd.DataFrame(self.data[var], columns = [var])
+            data['ones'] = 1
+            data1 = data.groupby(['SMOKE']).count()
+            data1=data1/data1['ones'].sum()
+            x=(data1*data1).sum()
+            return 1-x['ones']
+        else:
+            return "Please Enter a Categorical Variable"
 
     def bivariate():
         return 0
