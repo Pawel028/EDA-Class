@@ -95,6 +95,33 @@ class EDA_obj:
         else:
             return "Please Enter a Categorical Variable"
 
+    def IQR(self,var): # for any numerical Data
+        if self.data[var].dtypes != float:
+            return "Please Choose a Numerical Variable"
+        else:
+            x=self.data[var]
+            q25 = x.quantile(.25)
+            q75 = x.quantile(.75)
+            return [q25-1.5*(q75-q25), q75-1.5*(q75-q25)]
+        
+    def euclidean_distance_outlier(self,varlist, cutoff):
+        # x=np.array(self.data[[var1, var2]])
+        x=np.zeros([len(self.data), len(varlist)])
+        i=0
+        for var in varlist:
+            x[:,i] = self.data[var]
+            i=i+1
+
+        data_mean = x.mean(axis=0) # mean of data
+        data_1 = ((x-data_mean)**2).sum(axis=1) # distance of each point from the mean
+        result = pd.Series([0] * len(x))
+        lb = data_1.mean()-cutoff*data_1.std()
+        ub = data_1.mean()+cutoff*data_1.std()
+        result[(data_1<lb)] = 1
+        result[(data_1>ub)] = 1
+        return result.sum()
+
+
     def bivariate():
         return 0
     
